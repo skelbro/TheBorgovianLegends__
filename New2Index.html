@@ -1,0 +1,319 @@
+<html>
+<head>
+<script language = "javascript" src = "Guns.js"> </script>
+<script>
+function user(hunger, health) {
+		this.userHunger = hunger;
+		this.userHealth = health;
+		this.userFoodNumber = 0;
+	this.checkForHungerHealthData = function() {
+		this.checkForHungerData();
+		this.checkForHealthData();
+		//alert('Your Hunger is ' + this.userHunger + ' and your Health is ' + this.userHealth);
+		document.getElementById('Notifyer1').innerHTML = "Your Health is " + this.userHealth;
+		document.getElementById('Notifyer2').innerHTML = "Your Hunger is " + this.userHunger;
+		document.getElementById('userHealthDisplay').innerHTML = "Your Health:" + this.userHealth;
+		document.getElementById('HungerBarVisual').innerHTML = "Your Hunger" + this.userHunger;
+	}
+	
+	this.checkForHungerData = function() {
+		if(this.userHunger === undefined){
+		this.userHunger = 100;
+		}
+	}
+	
+	this.checkForHealthData = function() {
+		if(this.userHealth === undefined){
+		this.userHealth = 100;
+		}
+	}
+	
+this.signInButton = function(){
+	document.getElementById('myButtonSignIn').style.visibility="hidden";
+	this.checkForHungerHealthData();
+	this.activateOtherButtons();
+}
+this.activateOtherButtons = function() {
+	document.getElementById('attackAnimalButton').style.visibility="visible";
+
+}
+//Ending of sign in
+//function find an animal to attack
+this.findAnimal = function() { //eventually get rid of when switched to graphics so you ca just click on an animal
+		document.getElementById('Notifyer3').innerHTML = "";
+	this.randomAnimalGetHealth();
+	if (confirm('Are you sure you want to Attack An animal with ' + this.animalHealthNumber + 'Health')) {
+		document.getElementById('assignSwordButton').style.visibility="visible";
+		document.getElementById('assignGunButton').style.visibility="visible";
+		document.getElementById('getAttackDamageButton').style.visibility="visible";
+		document.getElementById('attackAnimalButton').style.visibility="hidden";
+					document.getElementById('opponetHealth').innerHTML = "Opponet Health:" + this.animalHealthNumber;
+					document.getElementById('Notifyer1').innerHTML = "Opponet Health is " + this.animalHealthNumber ;
+					document.getElementById('Notifyer2').innerHTML = "" ;
+					
+			
+	}
+
+}
+
+this.randomAnimalGetHealth = function() {
+	this.animalHealthNumber =  Math.floor(Math.random()*101);
+	this.animalInjured =  Math.floor(Math.random()*5);
+		if (this.animalInjured == 1) {
+			this.animalHealthNumber = this.animalHealthNumber / 2;
+		if(this.animalHealthNumber % 2 === false){
+			this.animalHealthNumber++;
+		}
+	}
+}
+
+this.getAnimalDamage = function() {
+	this.randomAnimalDamage = Math.floor(Math.random()*7);
+	this.animalDamage = this.randomAnimalDamage;
+}
+
+this.combat = function(){
+	this.userHealthTestInCombat = this.userHealth - this.animalDamage;
+	this.animalHealthTestInCombat = this.animalHealthNumber-this.weaponDamageGenerateNumberNew;
+	if(this.userHealthTestInCombat >= 0) {
+	this.userHealth = this.userHealth - this.animalDamage;
+	}
+	else {
+		this.userHealth = 0;
+	}
+	if(this.animalHealthTestInCombat >= 0) {
+	this.animalHealthNumber = this.animalHealthNumber-this.weaponDamageGenerateNumberNew;
+	}
+	else {
+	this.animalHealthNumber = 0;
+	}
+}
+
+this.updateHealthAndOpponetHealth = function() {
+	document.getElementById('userHealthDisplay').innerHTML = "Your Health:" + this.userHealth;
+	document.getElementById('opponetHealth').innerHTML = "Opponet Health:" + this.animalHealthNumber;
+	document.getElementById('Notifyer1').innerHTML = "You have taken " + this.animalDamage + " damage from the animal";
+	document.getElementById('Notifyer2').innerHTML = "You have done " + this.weaponDamageGenerateNumberNew + " damage to the animal";
+}
+// copied and pasted Being Attacked
+
+this.getAttackDamage = function() {
+//change to user vs user..... not set program vs user
+if (this.weapon != undefined) {
+	document.getElementById('Notifyer3').innerHTML = "";
+	document.getElementById('assignSwordButton').style.visibility="hidden";
+	document.getElementById('assignGunButton').style.visibility="hidden";
+	this.getWeaponDamage();
+	this.getAnimalDamage();
+	this.combat();
+	this.updateHealthAndOpponetHealth();
+	this.checkForHealthZero();
+	//this.updateHealthAndOpponetHealth();
+}
+};
+this.checkForHealthZero = function() {
+	if((this.userHealth <= 0) || (this.animalHealthNumber <=0)) {
+		if(this.userHealth <= 0) {
+			document.getElementById('getAttackDamageButton').style.visibility="hidden";
+			document.getElementById('attackAnimalButton').style.visibility="hidden";
+			document.getElementById('Notifyer3').innerHTML = "You have lost try again...";
+		}
+		if(this.animalHealthNumber <= 0) {
+			document.getElementById('getAttackDamageButton').style.visibility="hidden";
+			document.getElementById('attackAnimalButton').style.visibility="visible";
+			document.getElementById('Notifyer3').innerHTML = "You have won!";
+				this.randomGiftFood();
+				this.randomGiftWeapon();
+		}
+	}
+}
+
+this.randomGiftWeapon = function() {
+	this.randomWeaponChance = Math.floor(Math.random()*22);
+		if(this.randomWeaponChance === 1) {
+			this.awardMummus();
+		}
+		if(this.randomWeaponChance === 2) {
+			this.awardCardon();
+		}
+		if(this.randomWeaponChance === 3) {
+			this.awardTrexxor();
+		}
+}
+
+this.randomGiftFood = function() {
+this.numberOfTheGift = Math.floor(Math.random()*3);
+this.finalNumberOfTheGift = this.numberOfTheGift + 0;
+this.userFoodNumber = this.userFoodNumber + this.finalNumberOfTheGift;
+document.getElementById('amountOfFood').innerHTML = "Amount of food:" + this.userFoodNumber;
+}
+
+this.eatFood = function() {
+	if(this.userFoodNumber  > 0) {
+		this.userHealth = this.userHealth + 10;
+		if(this.userHunger > 50) {
+			this.userHunger = 100;
+		}
+		else {
+		this.userHunger = this.userHunger + 50;
+		}
+		this.userFoodNumber--;
+		document.getElementById('amountOfFood').innerHTML = "Amount of food:" + this.userFoodNumber;
+		document.getElementById('userHealthDisplay').innerHTML = "Your Health:" + this.userHealth;
+		document.getElementById('HungerBarVisual').innerHTML = "Your Hunger is currently " + this.userHunger + "%";
+	}
+
+}
+
+this.getWeaponDamage = function() {
+if(this.weapon === 'gun') {
+	this.weaponDamageGenerateNumber = Math.floor(Math.random()*11);
+	this.weaponDamageGenerateNumberNew = this.weaponDamageGenerateNumber + this.extraDamage;
+	//alert(this.weaponDamageGenerateNumberNew + ' with the gun');
+}
+else if(this.weapon === 'sword') {
+	this.weaponDamageGenerateNumberNew=Math.floor(Math.random()*11);
+	//alert(this.weaponDamageGenerateNumberNew + ' with the sword');
+}
+}
+this.assignSword = function() {
+	this.weapon = 'sword';
+	//alert(this.weapon + ' has been assigned');
+	document.getElementById('Notifyer1').innerHTML = "A " + this.weapon + " has been assigned";
+	document.getElementById('Notifyer2').innerHTML = "Special Effect, Health increased 125" ;
+	this.weaponAttributes();
+	
+}
+this.weaponAttributes = function() {
+if (this.weapon === 'sword') {
+		this.userHealth = this.userHealth + 25;
+		document.getElementById('userHealthDisplay').innerHTML = "Your Health:" + this.userHealth;
+		document.getElementById('assignSwordButton').style.visibility="hidden";
+		document.getElementById('assignGunButton').style.visibility="hidden";
+}
+if (this.weapon === 'gun') {
+	this.extraDamage = 3;
+	document.getElementById('assignGunButton').style.visibility="hidden";
+	document.getElementById('assignSwordButton').style.visibility="hidden";
+}
+}
+this.assignGun = function() {
+	this.weapon = 'gun';
+	//alert(this.weapon);
+	//alert(this.weapon + ' has been assigned');
+	document.getElementById('Notifyer1').innerHTML = "A " + this.weapon + " has been assigned";
+		document.getElementById('Notifyer2').innerHTML = "Extra Damage has been added!" ;
+	this.weaponAttributes();
+}
+
+///
+
+	this.start=function(){
+		this.hungerClockStart();
+	}
+
+	this.hungerClockStart=function(){
+	///this.setUserHungerClock(setInterval(this.updateHungerScreen,1000));
+	this.setUserHungerClock(setInterval(this.updateHungerScreen.bind(this),1000));
+	}
+	
+	this.updateHungerScreen=function(){
+	//alert(this.userHunger);
+			if(this.userHunger >= 0) {
+			var subtractAmount=1;
+			document.getElementById('HungerBarVisual').innerHTML = "Hunger is Currently at: " + this.userHunger + "%";
+			this.userHunger--;
+			}
+			this.damageHealthHungerZero();
+			return this.userHunger;
+			
+	}
+	this.damageHealthHungerZero = function() {
+		if(this.userHunger <= 0) {
+			if(this.userHealth > 0) {
+				this.userHealth = this.userHealth - .5
+			}
+			document.getElementById('userHealthDisplay').innerHTML = "Your Health:" + this.userHealth;
+			if(this.userHealth === 0) {
+				document.getElementById('getAttackDamageButton').style.visibility="hidden";
+			document.getElementById('attackAnimalButton').style.visibility="hidden";
+			document.getElementById('Notifyer3').innerHTML = "You have lost try again...";
+			
+			}
+		}
+	
+	}
+/// Weapons
+
+this.gunMummus = 'The Mummus';
+this.gunMummusDesc = 'The Mummus is a 3 barrel shotgun, dealing damage from 2-10';
+this.getMummusDamage = function() {
+	this.gunMummusDamageRandom = Math.floor(Math.random()*11);
+		if((this.gunMummusDamageRandom === 0) || (this.gunMummusDamageRandom ===1)) {
+			this.gunMummusDamage = 2;
+		}
+}
+this.gunMummusReload = 2500;
+this.gunMummusInBetween = 900;
+this.gunMummusAmmo = 3;
+this.awardMummus = function() {
+	alert('You have found the gun Mummus! ' + this.gunMummusDesc);
+}
+
+	
+this.gunTrexxor = 'The Trexxor';
+this.gunTrexxorDesc = 'The Trexxor is a sniper, dealing 0-20 damage';
+this.getTrexxorDamage = function(){
+	this.gunTrexxorDamage = Math.floor(Math.random()*21);
+}
+this.gunTrexxorReload = 4000;
+this.gunTrexxorInBetween = 0;
+this.gunTrexxorAmmo = 1;
+this.awardTrexxor = function() {
+	alert('You have found the gun Trexxor! ' + this.gunTrexxorDesc);
+}
+
+
+this.gunCardon = 'The Cardon';
+this.gunCardonDesc = 'The Cardon is a rifle, dealing 0-7 damage';
+this.getCardonDamage = function() {
+	this.gunCardonDamageRandom = Math.floor(Math.random()*8);
+}
+
+this.gunCardonAmmo = 8;
+this.gunCardonInBetween = 1000;
+this.gunCardonReload = 4000;
+
+this.awardCardon =  function() {
+	alert('You have found the gun Cardon! ' + this.gunCardonDesc);
+} 
+///Weapons End
+	
+	
+}
+var user1 = new user();
+
+
+</script>
+</head>
+<h1 id = "userHealthDisplay">Your Health:<br></h1>
+<h1 id = "HungerBarVisual">Your Hunger:<br></h1>
+<h1 id = 'opponetHealth'><br></h1>
+
+<input id="myButtonSignIn" style="visibility:visible" type="button" value="Sign in" onclick="user1.signInButton(); user1.hungerClockStart()">
+<input id="attackAnimalButton" style="visibility:hidden" type="button" value="Find a Creature to Attack" onclick="user1.findAnimal()">
+
+<input id="assignSwordButton" style="visibility:hidden" type="button" value="Assign your sword!" onclick="user1.assignSword()">
+<input id="assignGunButton" style="visibility:hidden" type="button" value="Assign your gun!" onclick="user1.assignGun()">
+<input id="getAttackDamageButton" style="visibility:hidden" type="button" value="Attack!" onclick="user1.getAttackDamage()">
+<body>
+<h1 id = 'UpdateBoxOutline'>------------------Action Notifier Box-------------------<br></h1>
+<h1 id = 'Notifyer1'><br></h1>
+<h1 id = 'Notifyer2'><br></h1>
+<h1 id = 'Notifyer3'><br></h1>
+<h1 id = 'inventoryLine'>-----------------------------Inventory------------------------------<br></h1>
+<h1 id = 'amountOfFood'>Amount of Food:</h1>
+<input id="eatFoodButton" style="visibility:visible" type="button" value="Eat some food!" onclick="user1.eatFood()">
+
+</body>
+</html>
